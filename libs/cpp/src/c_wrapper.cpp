@@ -1,5 +1,5 @@
-#include "c_wrapper.h"
-#include "Calculator.h"
+#include "cpp_calculator/c_wrapper.h"
+#include "cpp_calculator/Calculator.h"
 #include <cstring>
 #include <new>
 

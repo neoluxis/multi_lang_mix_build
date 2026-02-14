@@ -10,32 +10,44 @@ if(NOT NASM_EXECUTABLE)
 endif()
 
 # 包含目录
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # 头文件
 set(HEADERS
-    math_ops_asm.h
+    include/asm_math_ops/math_ops_asm.h
 )
 
 # 自定义命令编译汇编文件
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/math_ops.o
-    COMMAND ${NASM_EXECUTABLE} -f elf64 -o ${CMAKE_CURRENT_BINARY_DIR}/math_ops.o ${CMAKE_CURRENT_SOURCE_DIR}/math_ops.asm
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/math_ops.asm
+    COMMAND ${NASM_EXECUTABLE} -f elf64 -o ${CMAKE_CURRENT_BINARY_DIR}/math_ops.o ${CMAKE_CURRENT_SOURCE_DIR}/src/math_ops.asm
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/math_ops.asm
     COMMENT "Assembling math_ops.asm"
 )
 
 # 创建静态库
 add_library(asm_math_ops STATIC ${CMAKE_CURRENT_BINARY_DIR}/math_ops.o ${HEADERS})
 
-# 设置公共包含目录
+# 创建共享库（用于Python绑定）
+add_library(asm_math_ops_shared SHARED ${CMAKE_CURRENT_BINARY_DIR}/math_ops.o ${HEADERS})
+
+# 设置公共包含目录 - 允许外部项目使用 <asm/math_ops_asm.h>
 target_include_directories(asm_math_ops PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include/asm>
+)
+target_include_directories(asm_math_ops_shared PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include/asm>
 )
 
 # 明确指定链接语言
 set_target_properties(asm_math_ops PROPERTIES LINKER_LANGUAGE C)
+set_target_properties(asm_math_ops_shared PROPERTIES
+    LINKER_LANGUAGE C
+    OUTPUT_NAME "asm_math_ops"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+)
 
 # 设置库的输出名称
 set_target_properties(asm_math_ops PROPERTIES
@@ -55,17 +67,15 @@ install(FILES ${HEADERS} DESTINATION include)
 option(BUILD_TESTS "Build test programs" ON)
 if(BUILD_TESTS)
     # 创建一个简单的C测试程序
-    add_executable(test_asm_ops test_main.c)
+    add_executable(test_asm_ops tests/test_main.c)
     target_link_libraries(test_asm_ops asm_math_ops)
     set_target_properties(test_asm_ops PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )
-endif()
-option(BUILD_TESTS "Build test programs" ON)
-if(BUILD_TESTS)
-    # 创建一个简单的C测试程序
-    add_executable(test_asm_math_ops test_main.c)
-    target_link_libraries(test_asm_math_ops asm_math_ops)
+
+    # 创建另一个测试程序
+    add_executable(test_asm_math_ops tests/test_main.c)
+    target_link_libraries(test_asm_math_ops asm_math_ops_shared)
     set_target_properties(test_asm_math_ops PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )

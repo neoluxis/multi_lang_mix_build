@@ -7,13 +7,6 @@ project(c_with_cpp_asm_example)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-# 包含目录
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../libs/c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../libs/asm
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../libs/cpp
-)
-
 # 源文件
 set(SOURCES
     main.c

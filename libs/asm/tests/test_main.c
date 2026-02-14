@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "math_ops_asm.h"
+#include "asm_math_ops/math_ops_asm.h"
 
 int main()
 {

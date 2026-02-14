@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "math_ops.h"
+#include "c_math_ops/math_ops.h"
 
 int main()
 {

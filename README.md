@@ -22,8 +22,12 @@
 - [x] 基础的 C++ 库
 - [x] x64 汇编库
 - [ ] aarch64 汇编库\*
-- [ ] c project using c++ and asm
+- [x] c project using c++ and asm
 - [ ] 为前述库添加 rust, c#，java, python 绑定
+    - [ ] python
+    - [ ] rust
+    - [ ] java
+    - [ ] c#
 - [ ] rust project using c-s and asm
 - [ ] java project using c-s and asm
 - [ ] c# project using c-s and asm

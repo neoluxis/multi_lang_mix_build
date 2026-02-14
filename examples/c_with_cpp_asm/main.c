@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 // C库头文件
-#include "math_ops.h"
+#include <c_math_ops/math_ops.h>
 
 // 汇编库头文件
-#include "math_ops_asm.h"
+#include <asm_math_ops/math_ops_asm.h>
 
 // C++库C wrapper头文件
-#include "c_wrapper.h"
+#include <cpp_calculator/c_wrapper.h>
 
 int main() {
     printf("C Project Using C++, C, and Assembly Libraries\n");

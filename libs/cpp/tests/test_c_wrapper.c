@@ -1,4 +1,4 @@
-#include "c_wrapper.h"
+#include "cpp_calculator/c_wrapper.h"
 #include <stdio.h>
 #include <stdlib.h>
 
