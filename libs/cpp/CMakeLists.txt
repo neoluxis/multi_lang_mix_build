@@ -13,11 +13,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # 源文件
 set(SOURCES
     Calculator.cpp
+    c_wrapper.cpp
 )
 
 # 头文件
 set(HEADERS
     Calculator.h
+    c_wrapper.h
 )
 
 # 创建静态库
@@ -43,9 +45,17 @@ install(FILES ${HEADERS} DESTINATION include)
 # 可选：构建测试程序
 option(BUILD_TESTS "Build test programs" ON)
 if(BUILD_TESTS)
+    # C++测试程序
     add_executable(test_cpp_calculator test_main.cpp)
     target_link_libraries(test_cpp_calculator cpp_calculator)
     set_target_properties(test_cpp_calculator PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    )
+
+    # C wrapper测试程序
+    add_executable(test_c_wrapper test_c_wrapper.c)
+    target_link_libraries(test_c_wrapper cpp_calculator)
+    set_target_properties(test_c_wrapper PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )
 endif()

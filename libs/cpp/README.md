@@ -267,14 +267,109 @@ Operation类可以扩展为工厂模式创建不同操作实例。
 - **标准库**: C++14标准库
 - **操作系统**: Linux, macOS, Windows
 
-## 扩展建议
+## C Wrapper 接口
 
-- 添加更多科学函数 (对数、指数等)
-- 实现计算器插件系统
-- 添加表达式解析器
-- 支持复数运算
-- 实现计算历史持久化
+为了允许C代码调用C++库，我们提供了完整的C ABI兼容接口。
 
-## 许可证
+### 设计原则
 
-本项目遵循项目根目录的许可证。
+- **不透明指针**: 使用 `void*` 隐藏C++对象实现
+- **错误处理**: 通过返回值和错误码处理异常
+- **内存管理**: 明确的创建/销毁函数
+- **类型安全**: 明确的类型转换和边界检查
+
+### 基本使用模式
+
+```c
+#include "c_wrapper.h"
+
+// 1. 创建计算器实例
+CalculatorHandle* calc = calculator_create();
+if (!calc) {
+    // 处理创建失败
+    return;
+}
+
+// 2. 执行运算
+double result;
+CalculatorError err = calculator_add(calc, 10.5, 5.2, &result);
+if (err != CALC_SUCCESS) {
+    const char* error_msg = calculator_error_to_string(err);
+    printf("Error: %s\n", error_msg);
+} else {
+    printf("Result: %f\n", result);
+}
+
+// 3. 清理资源
+calculator_destroy(calc);
+```
+
+### 高级功能使用
+
+```c
+#include "c_wrapper.h"
+
+// 创建高级计算器
+AdvancedCalculatorHandle* adv_calc = advanced_calculator_create();
+
+// 科学运算
+double power_result;
+advanced_calculator_power(adv_calc, 2.0, 10, &power_result);
+
+double sin_result;
+advanced_calculator_sine(adv_calc, 30.0, &sin_result);
+
+// 数组操作
+int32_t arr[] = {1, 2, 3, 4, 5};
+int64_t sum;
+advanced_calculator_sum_array_int32(adv_calc, arr, 5, &sum);
+
+// 批量操作
+double values[] = {1.0, 2.0, 3.0};
+double results[3];
+advanced_calculator_batch_add(adv_calc, values, 3, 10.0, results);
+
+// 清理
+advanced_calculator_destroy(adv_calc);
+```
+
+### 错误处理
+
+所有函数都返回 `CalculatorError` 枚举值：
+
+```c
+typedef enum {
+    CALC_SUCCESS = 0,
+    CALC_ERROR_DIVISION_BY_ZERO = 1,
+    CALC_ERROR_INVALID_ARGUMENT = 2,
+    CALC_ERROR_OUT_OF_MEMORY = 3,
+    CALC_ERROR_SQUARE_ROOT_NEGATIVE = 4,
+    CALC_ERROR_FACTORIAL_NEGATIVE = 5,
+    CALC_ERROR_ARRAY_EMPTY = 6
+} CalculatorError;
+```
+
+### 构建和测试
+
+C wrapper会自动包含在库构建中：
+
+```bash
+# 构建库（包含C wrapper）
+mkdir build && cd build
+cmake ..
+make
+
+# 运行C wrapper测试
+./bin/test_c_wrapper
+```
+
+### 跨语言集成
+
+C wrapper使得C++库可以被以下语言轻松调用：
+- **C**: 直接使用头文件
+- **Python**: 通过ctypes
+- **Java**: 通过JNI
+- **C#**: 通过P/Invoke
+- **其他语言**: 通过FFI绑定
+
+## 完整API文档
