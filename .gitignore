@@ -35,6 +35,11 @@ cmake_install.cmake
 Makefile
 *.cmake
 
+# Cython
+*.c
+*.so
+*.pyd
+
 # Logs
 *.log
 logs/
