@@ -24,6 +24,16 @@ set(HEADERS
 add_library(c_math_ops SHARED ${SOURCES} ${HEADERS})
 add_library(c_math_ops_s STATIC ${SOURCES} ${HEADERS})
 
+# 设置公共包含目录
+target_include_directories(c_math_ops PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+target_include_directories(c_math_ops_s PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+
 # 设置库的输出名称
 set_target_properties(c_math_ops PROPERTIES
     OUTPUT_NAME "math_ops"

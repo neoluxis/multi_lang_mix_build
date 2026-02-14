@@ -28,6 +28,12 @@ add_custom_command(
 # 创建静态库
 add_library(asm_math_ops STATIC ${CMAKE_CURRENT_BINARY_DIR}/math_ops.o ${HEADERS})
 
+# 设置公共包含目录
+target_include_directories(asm_math_ops PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+
 # 明确指定链接语言
 set_target_properties(asm_math_ops PROPERTIES LINKER_LANGUAGE C)
 

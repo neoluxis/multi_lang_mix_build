@@ -25,6 +25,12 @@ set(HEADERS
 # 创建静态库
 add_library(cpp_calculator STATIC ${SOURCES} ${HEADERS})
 
+# 设置公共包含目录
+target_include_directories(cpp_calculator PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+
 # 设置库的输出名称
 set_target_properties(cpp_calculator PROPERTIES
     OUTPUT_NAME "cpp_calculator"

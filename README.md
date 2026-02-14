@@ -18,9 +18,9 @@
 
 ## TODO
 
-- [ ] 基础的 C 库
-- [ ] 基础的 C++ 库
-- [ ] x64 汇编库
+- [x] 基础的 C 库
+- [x] 基础的 C++ 库
+- [x] x64 汇编库
 - [ ] aarch64 汇编库\*
 - [ ] c project using c++ and asm
 - [ ] 为前述库添加 rust, c#，java, python 绑定
