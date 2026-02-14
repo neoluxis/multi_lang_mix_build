@@ -13,4 +13,5 @@ include_directories(
 add_subdirectory(libs/c)
 add_subdirectory(libs/asm)
 add_subdirectory(libs/cpp)
+add_subdirectory(libs/cpp/bindings/python)
 add_subdirectory(examples/c_with_cpp_asm)

@@ -38,6 +38,11 @@ target_include_directories(c_math_ops_s PUBLIC
 set_target_properties(c_math_ops PROPERTIES
     OUTPUT_NAME "math_ops"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+)
+set_target_properties(c_math_ops_s PROPERTIES
+    OUTPUT_NAME "math_ops"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
 # 安装规则

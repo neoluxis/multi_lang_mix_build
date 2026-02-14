@@ -23,18 +23,28 @@ set(HEADERS
 )
 
 # 创建静态库
-add_library(cpp_calculator STATIC ${SOURCES} ${HEADERS})
+add_library(cpp_calculator_s STATIC ${SOURCES} ${HEADERS})
+add_library(cpp_calculator SHARED ${SOURCES} ${HEADERS})
 
 # 设置公共包含目录 - 允许外部项目使用 <cpp/Calculator.h>
+target_include_directories(cpp_calculator_s PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include/cpp>
+)
 target_include_directories(cpp_calculator PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include/cpp>
 )
 
-# 设置库的输出名称
+# 设置库的输出名称和属性
+set_target_properties(cpp_calculator_s PROPERTIES
+    OUTPUT_NAME "cpp_calculator"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+)
 set_target_properties(cpp_calculator PROPERTIES
     OUTPUT_NAME "cpp_calculator"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     POSITION_INDEPENDENT_CODE ON
 )
 
