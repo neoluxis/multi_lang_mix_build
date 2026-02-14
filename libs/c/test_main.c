@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "math_ops.h"
 
-int main() {
+int main()
+{
     // 测试基本运算
     printf("Add: %d + %d = %d\n", 5, 3, add_int(5, 3));
     printf("Multiply: %d * %d = %d\n", 4, 7, mul_int(4, 7));
@@ -18,7 +19,7 @@ int main() {
     printf("Array min: %d\n", find_min(arr, size));
 
     // 测试字符串操作
-    const char* test_str = "Hello, World!";
+    const char *test_str = "Hello, World!";
     printf("String length: %zu\n", string_length(test_str));
 
     char dest[20];

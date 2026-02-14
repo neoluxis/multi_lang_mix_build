@@ -2,7 +2,8 @@
 #include <stdint.h>
 #include "math_ops_asm.h"
 
-int main() {
+int main()
+{
     printf("Testing x64 Assembly Math Operations\n");
     printf("=====================================\n\n");
 
