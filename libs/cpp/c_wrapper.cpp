@@ -4,13 +4,8 @@
 #include <new>
 
 // 结构体定义（隐藏C++对象）
-struct CalculatorHandle {
-    Calculator* calculator;
-};
-
-struct AdvancedCalculatorHandle {
-    AdvancedCalculator* calculator;
-};
+HANDLE_DEF(Calculator)
+HANDLE_DEF(AdvancedCalculator)
 
 // 错误处理辅助函数
 static CalculatorError cpp_exception_to_c_error(const CalculatorException& e) {

@@ -8,9 +8,16 @@
 extern "C" {
 #endif
 
+#define HANDLE_DECL(name) \
+    typedef struct name##Handle name##Handle;
+#define HANDLE_DEF(name) \
+    struct name##Handle { \
+        name* calculator; \
+    };
+    
 // 不透明指针类型，用于隐藏C++对象
-typedef struct CalculatorHandle CalculatorHandle;
-typedef struct AdvancedCalculatorHandle AdvancedCalculatorHandle;
+HANDLE_DECL(Calculator)
+HANDLE_DECL(AdvancedCalculator)
 
 // 错误码定义
 typedef enum {
