@@ -20,8 +20,9 @@ set(HEADERS
     math_ops.h
 )
 
-# 创建静态库
-add_library(c_math_ops STATIC ${SOURCES} ${HEADERS})
+# 创建库
+add_library(c_math_ops SHARED ${SOURCES} ${HEADERS})
+add_library(c_math_ops_s STATIC ${SOURCES} ${HEADERS})
 
 # 设置库的输出名称
 set_target_properties(c_math_ops PROPERTIES
